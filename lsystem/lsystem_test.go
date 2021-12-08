@@ -1,9 +1,9 @@
-package lsys
+package lsystem
 
 import "testing"
 
 func TestLsystem(t *testing.T) {
-	l := NewLsystem("B", "B", "F[-B]+B", "F", "FF")
+	l := New("B", "B", "F[-B]+B", "F", "FF")
 
 	assertString(t, "B", l.String())
 
@@ -18,7 +18,7 @@ func TestLsystem(t *testing.T) {
 var blackhole string
 
 func BenchmarkLSystem(b *testing.B) {
-	l := NewLsystem("F", "F", "FF+[+F-F-F]-[-F+F+F]")
+	l := New("F", "F", "FF+[+F-F-F]-[-F+F+F]")
 
 	for i := 0; i < 10; i++ {
 		l.Grow()

@@ -6,8 +6,11 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/br7552/lsystem/lsys"
+	"github.com/br7552/asciiturtle"
+	"github.com/br7552/lsys/lsystem"
 )
+
+const canvasSize = 50
 
 func main() {
 	var (
@@ -27,10 +30,29 @@ func main() {
 
 	flag.Parse()
 
-	l := lsys.NewLsystem(axiom, rules...)
+	l := lsystem.New(axiom, rules...)
 
 	for i := 0; i < depth; i++ {
 		l.Grow()
-		fmt.Println(l)
 	}
+
+	canvas := asciiturtle.NewCanvas(canvasSize, canvasSize)
+	pen, _ := asciiturtle.NewPen(canvas, '#', canvasSize/2, canvasSize/2)
+
+	for _, v := range l.String() {
+		switch v {
+		case 'F':
+			pen.Forward(3)
+		case 'G':
+			pen.PenUp()
+			pen.Forward(3)
+			pen.PenDown()
+		case '+':
+			pen.Right(60)
+		case '-':
+			pen.Left(60)
+		}
+	}
+
+	fmt.Println(canvas)
 }

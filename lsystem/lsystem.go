@@ -1,4 +1,4 @@
-package lsys
+package lsystem
 
 import "strings"
 
@@ -7,7 +7,7 @@ type Lsystem struct {
 	current  string
 }
 
-func NewLsystem(axiom string, rules ...string) *Lsystem {
+func New(axiom string, rules ...string) *Lsystem {
 	return &Lsystem{
 		replacer: strings.NewReplacer(rules...),
 		current:  axiom,
