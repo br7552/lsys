@@ -1,4 +1,4 @@
-package lsystem
+package lsys
 
 import "strings"
 
