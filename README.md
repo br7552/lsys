@@ -1,2 +1,2 @@
 # lsys
-A tool for growing L-systems
+CLI and API for drawing fractals with ASCII characters using L-systems
