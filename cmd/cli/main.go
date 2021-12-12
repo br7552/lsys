@@ -7,7 +7,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/br7552/asciiturtle"
+	"github.com/br7552/lsys/internal/asciiturtle"
 	"github.com/br7552/lsys/lsystem"
 )
 
@@ -70,9 +70,8 @@ func main() {
 	}
 
 	canvas := asciiturtle.NewCanvas(canvasWidth, canvasHeight)
-	pen, _ := asciiturtle.NewPen(canvas, '#', canvas.Width()/2,
+	pen, _ := asciiturtle.NewPen(canvas, startAngle, canvas.Width()/2,
 		canvas.Height()/2)
-	pen.Heading = startAngle
 
 	for _, v := range l.String() {
 		switch v {
@@ -87,9 +86,11 @@ func main() {
 		case '-':
 			pen.Left(angle)
 		case '[':
-			pushState(pen.X, pen.Y, pen.Heading)
+			pushState(pen.X, pen.Y, pen.GetHeading())
 		case ']':
-			pen.X, pen.Y, pen.Heading = popState()
+			var heading float64
+			pen.X, pen.Y, heading = popState()
+			pen.SetHeading(heading)
 		case '|':
 			pen.Forward(2)
 		}

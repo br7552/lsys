@@ -17,3 +17,6 @@
 # Editor Files
 *.swp
 bin/
+
+# Misc
+notes.txt
