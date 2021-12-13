@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"github.com/br7552/lsys/internal/data"
@@ -20,6 +19,12 @@ func (app *application) generateFractalHandler(w http.ResponseWriter,
 		Height     int               `json:"height"`
 	}
 
+	err := app.readJSON(w, r, &input)
+	if err != nil {
+		app.errorResponse(w, r, http.StatusBadRequest, err.Error())
+		return
+	}
+
 	// TODO validate input
 
 	fractal := data.Fractal{
@@ -30,14 +35,6 @@ func (app *application) generateFractalHandler(w http.ResponseWriter,
 		Step:       input.Step,
 		Width:      input.Width,
 		Height:     input.Height,
-	}
-
-	dec := json.NewDecoder(r.Body)
-	dec.DisallowUnknownFields()
-	err := dec.Decode(&fractal)
-	if err != nil {
-		app.serverErrorResponse(w, r, err)
-		return
 	}
 
 	data.Generate(&fractal)
