@@ -2,6 +2,7 @@ package data
 
 import (
 	"github.com/br7552/lsys/internal/asciiturtle"
+	"github.com/br7552/lsys/internal/validator"
 	"github.com/br7552/lsys/lsystem"
 )
 
@@ -15,6 +16,32 @@ type Fractal struct {
 	Width      int
 	Height     int
 	Data       string
+}
+
+func ValidateFractal(v *validator.Validator, fractal *Fractal) {
+	v.Check(fractal.Axiom != "", "axiom", "must be provided")
+	v.Check(len(fractal.Axiom) <= 500, "axiom",
+		"must not be longer than 500 characters")
+
+	v.Check(len(fractal.Rules) > 0, "rules", "must be provided")
+
+	v.Check(fractal.Depth >= 0 && fractal.Depth <= 10, "depth",
+		"must be between 0 and 10 (inclusive)")
+
+	v.Check(fractal.Angle >= 0.0 && fractal.Angle <= 360.0, "angle",
+		"must be between 0 and 360 (inclusive)")
+
+	v.Check(fractal.StartAngle >= 0.0 && fractal.Angle <= 360.0, "angle",
+		"must be between 0 and 360 (inclusive)")
+
+	v.Check(fractal.Step >= 1 && fractal.Step <= 500, "step",
+		"must be between 1 and 500 (inclusive)")
+
+	v.Check(fractal.Width >= 1 && fractal.Step <= 500, "width",
+		"must be between 1 and 500 (inclusive)")
+
+	v.Check(fractal.Height >= 1 && fractal.Step <= 500, "height",
+		"must be between 1 and 500 (inclusive)")
 }
 
 type state struct {

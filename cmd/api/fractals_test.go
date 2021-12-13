@@ -36,9 +36,9 @@ func TestGenerateFractalHandler(t *testing.T) {
 		Depth:      3,
 		Angle:      60.0,
 		StartAngle: 0.0,
-		Step:       4,
-		Width:      80,
-		Height:     80,
+		Step:       2,
+		Width:      20,
+		Height:     20,
 	}
 
 	js, err := json.Marshal(in)
@@ -46,7 +46,7 @@ func TestGenerateFractalHandler(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	rs, err := ts.Client().Post(ts.URL+"/fractals", "", bytes.NewReader(js))
+	rs, err := ts.Client().Post(ts.URL+"/v1/fractals", "", bytes.NewReader(js))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -55,17 +55,20 @@ func TestGenerateFractalHandler(t *testing.T) {
 		t.Errorf("want %d, got %d", http.StatusOK, rs.StatusCode)
 	}
 
-	var got data.Fractal
+	var env struct {
+		Fractal data.Fractal `json="fractal"`
+	}
 
 	defer rs.Body.Close()
 	dec := json.NewDecoder(rs.Body)
 	dec.DisallowUnknownFields()
-	err = dec.Decode(&got)
+	err = dec.Decode(&env)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	expected := data.Fractal{
+	got := env.Fractal
+	want := data.Fractal{
 		Axiom:      in.Axiom,
 		Rules:      in.Rules,
 		Depth:      in.Depth,
@@ -76,9 +79,9 @@ func TestGenerateFractalHandler(t *testing.T) {
 		Height:     in.Height,
 	}
 
-	data.Generate(&expected)
+	data.Generate(&want)
 
-	if !reflect.DeepEqual(expected, got) {
-		t.Errorf("reponse does not match expected")
+	if !reflect.DeepEqual(want, got) {
+		t.Errorf("want %v, got %v", want, got)
 	}
 }

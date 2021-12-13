@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/br7552/lsys/internal/data"
+	"github.com/br7552/lsys/internal/validator"
 )
 
 func (app *application) generateFractalHandler(w http.ResponseWriter,
@@ -25,16 +26,24 @@ func (app *application) generateFractalHandler(w http.ResponseWriter,
 		return
 	}
 
-	// TODO validate input
-
 	fractal := data.Fractal{
 		Axiom:      input.Axiom,
 		Rules:      input.Rules,
 		Depth:      input.Depth,
+		Angle:      input.Angle,
 		StartAngle: input.StartAngle,
 		Step:       input.Step,
 		Width:      input.Width,
 		Height:     input.Height,
+	}
+
+	v := validator.New()
+
+	data.ValidateFractal(v, &fractal)
+
+	if !v.Valid() {
+		app.failedValidationResponse(w, r, v.Errors)
+		return
 	}
 
 	data.Generate(&fractal)
