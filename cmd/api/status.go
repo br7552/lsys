@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"net/http"
 )
 
@@ -15,7 +14,6 @@ func (app *application) showStatusHandler(w http.ResponseWriter,
 
 	err := app.writeJSON(w, http.StatusOK, envelope{"status": status}, nil)
 	if err != nil {
-		log.Println(err)
-		http.Error(w, "Server Error", http.StatusInternalServerError)
+		app.serverErrorResponse(w, r, err)
 	}
 }

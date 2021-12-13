@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/br7552/lsys/internal/data"
@@ -37,7 +36,7 @@ func (app *application) generateFractalHandler(w http.ResponseWriter,
 	dec.DisallowUnknownFields()
 	err := dec.Decode(&fractal)
 	if err != nil {
-		log.Println(err)
+		app.serverErrorResponse(w, r, err)
 		return
 	}
 
@@ -45,7 +44,7 @@ func (app *application) generateFractalHandler(w http.ResponseWriter,
 
 	err = app.writeJSON(w, http.StatusOK, envelope{"fractal": fractal}, nil)
 	if err != nil {
-		log.Println(err)
-		http.Error(w, "Server Error", http.StatusInternalServerError)
+		app.serverErrorResponse(w, r, err)
+		return
 	}
 }

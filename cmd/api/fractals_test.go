@@ -22,7 +22,7 @@ type input struct {
 	Height     int               `json:"height"`
 }
 
-func TestgenerateFractalHandler(t *testing.T) {
+func TestGenerateFractalHandler(t *testing.T) {
 	var app application
 
 	ts := httptest.NewServer(app.routes())
