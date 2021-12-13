@@ -10,19 +10,6 @@ import (
 
 func (app *application) generateFractalHandler(w http.ResponseWriter,
 	r *http.Request) {
-	/*
-		fractal := data.Fractal{
-			Axiom:      "F++F++F",
-			Rules:      []string{"F", "F-F++F-F"},
-			Depth:      3,
-			Angle:      60.0,
-			StartAngle: 0.0,
-			Step:       2,
-			Width:      60,
-			Height:     90,
-		}
-	*/
-
 	var input struct {
 		Axiom      string            `json:"axiom"`
 		Rules      map[string]string `json:"rules"`
