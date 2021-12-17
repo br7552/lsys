@@ -14,5 +14,5 @@ func (app *application) routes() http.Handler {
 	mux.HandleFunc(http.MethodGet, "/v1/status", app.showStatusHandler)
 	mux.HandleFunc(http.MethodPost, "/v1/fractals", app.generateFractalHandler)
 
-	return app.recoverPanic(mux)
+	return app.recoverPanic(app.rateLimit(mux))
 }
