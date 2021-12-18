@@ -45,3 +45,10 @@ linker_flags = '-s -X main.buildTime=${current_time} -X main.version=${git_descr
 build/cli:
 	@echo 'Building cmd/cli...'
 	go build -ldflags=${linker_flags} -o=./bin/lsys ./cmd/cli
+
+## build/api: build the cmd/api application
+.PHONY: build/api
+build/api:
+	@echo 'Building cmd/api...'
+	go build -ldflags=${linker_flags} -o=./bin/api ./cmd/api
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo -ldflags=${linker_flags} -o=./bin/linux_adm64/api ./cmd/api
