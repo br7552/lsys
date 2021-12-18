@@ -51,4 +51,4 @@ build/cli:
 build/api:
 	@echo 'Building cmd/api...'
 	go build -ldflags=${linker_flags} -o=./bin/api ./cmd/api
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo -ldflags=${linker_flags} -o=./bin/linux_adm64/api ./cmd/api
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -tags netgo -ldflags=${linker_flags} -o=./bin/linux_amd64/api ./cmd/api
