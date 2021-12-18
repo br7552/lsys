@@ -14,16 +14,16 @@ const html = `
 </head>
 <body>
 	<form id="fractalForm">
-		<label for="axiom">Axiom:</label></br>
+		<label for="axiom">Axiom:</label><br>
 		<input type="text" id="axiom" value="F++F++F"><br>
-		<label for="rules">Rules:</label></br>
+		<label for="rules">Rules:</label><br>
 		<input type="text" id="rules" value="F=F-F++F-F"><br>
-		<label for="depth">Depth:</label><br>
-		<input type="number" id="depth" value="3"><br>
 		<label for="angle">Angle:</label><br>
-		<input type="number" id="angle" value="60"><br>
+		<input type="number" id="angle" min="0" max="360" value="60"><br>
+		<label for="depth">Depth:</label><br>
+		<input type="range" id="depth" min="0" max="10" value="3"><br>
 		<label for="step">Step:</label><br>
-		<input type="number" id="step" value="3"><br>
+		<input type="range" id="step" min="1" max="20" value="3"><br>
 		<input type="button" onclick="generate()" value="Generate">
 	</form>
 
@@ -50,8 +50,8 @@ const html = `
 					axiom: axiom,
 					rules: Object.fromEntries(rules),
 					angle: angle,
-					height: 66,
-					width: 100,
+					height: 200,
+					width: 200,
 					step: step,
 					depth: depth
 				})
@@ -60,7 +60,7 @@ const html = `
 					response.json().then(function(obj) {
 						var fractal = obj.fractal.Data
 						document.getElementById("output").innerHTML =
-							'<pre>' + fractal + '</pre>';
+							'<pre>' + fractal.trim().slice(1) + '</pre>';
 					});
 				},
 				function(err) {
