@@ -3,8 +3,6 @@ CLI and API for drawing fractals with ASCII characters using L-systems
 
 This is based on a description of a program called **lsys** in the book *Computational Beauty of Nature*.
 
-[Demo](https://br7552.github.io/lsys/)
-
 ### L-Systems
 An L-system consists of an alphabet of symbols, an initial axiom string, and a set of production rules for expanding symbols into strings.
 
