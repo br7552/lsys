@@ -86,7 +86,7 @@ Depth (iterations): 6
 
 
 ### API Endpoint
-Make a POST request to https://api.lsys.blake-reynolds.net/v1/fractals with a JSON object containing the following fields:
+Make a POST request to /v1/fractals with a JSON object containing the following fields:
 Name | JSON Type | Description | Required
 --- | --- | --- | ---
 axiom | string | The L-system's axiom | *
